@@ -1,4 +1,3 @@
 auth_bsky <- function() {
-  auth <- bs_auth(user = bs_get_user(), pass = bs_get_pass())
-  return(auth)
+  bs_auth(user = bs_get_user(), pass = bs_get_pass())
 }
