@@ -3,7 +3,7 @@ calculate_post_scores <- function(df) {
   
   current_day <- today()
   date_span <- as.integer(difftime(max(df$date, na.rm = TRUE), 
-    min(posts$date, na.rm = TRUE), units = "days") + 1)
+    min(df$date, na.rm = TRUE), units = "days") + 1)
 
   # The decay constant determines how fast the decay function will reduce
   # a post's sociality score based on its age in days. 
