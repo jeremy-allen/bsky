@@ -7,4 +7,4 @@ Edit the following variables before running:
 - `n_posts`
 - `query`
 
-See the [bskyr]("https://christophertkenny.com/bskyr/") package site for how to authenticate with Bluesky. `bskyr` was created by [Christopher T. Kenny]("https://github.com/christopherkenny").
+See the [bskyr](https://christophertkenny.com/bskyr/) package site for how to authenticate with Bluesky. `bskyr` was created by [Christopher T. Kenny](https://github.com/christopherkenny).
