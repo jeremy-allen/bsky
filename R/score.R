@@ -19,7 +19,7 @@ calculate_post_scores <- function(df) {
       # in the game, i.e., more risk accepted by the reposter.
       weighted_sum = (like_count * 0.25) + (repost_count * 6),
       age_days = as.numeric(difftime(current_day, date, units = "days")),
-      # Becasue we care most about *recent* activity, we reduce the weighted
+      # Because we care most about *recent* activity, we reduce the weighted
       # sum using an exponential decay function based on post age, i.e.,
       # each day of age exponentially reduces a post's sociality score.
       age_factor = exp(-age_days / decay_constant),
