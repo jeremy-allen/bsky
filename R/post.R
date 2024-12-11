@@ -14,8 +14,7 @@ bs <- function(query = "rstats", n_posts = 2000, keep = FALSE) {
     query = query,
     limit = n_posts,
     sort = "latest"
-  ) |> 
-  arrange(desc(like_count))
+  )
 
   # score degree of sociality of all posts
   posts_all <- rstats_posts_raw |> 
@@ -29,6 +28,7 @@ bs <- function(query = "rstats", n_posts = 2000, keep = FALSE) {
     select(uri, author_did, like_count, repost_count, author_displayName,
       record_text, date, author_handle) |> 
     mutate(post_url = build_url(did = author_did, uri = uri)) |> 
+    # calculate and column for sociality score
     calculate_post_scores()
 
   all_date_span <- as.integer(difftime(max(posts_all$date, na.rm = TRUE), 
