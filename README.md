@@ -10,7 +10,7 @@ Posts are scored on what I call sociality, which values reposts and likes. Repos
 ### How do I use this?
 
 1. Clone this repo
-2. Install the Christopher Kenny's `bskyr` package and follow its instructions for authenticating with Bluesky
+2. Install Christopher Kenny's `bskyr` package and follow its instructions for authenticating with Bluesky
 3. Source the `R/post.R` file
 4. Run `bs()` in your console.
 
