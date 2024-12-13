@@ -17,7 +17,8 @@ calculate_post_scores <- function(df) {
     mutate(
       # Value reposts more than likes because reposts have more skin
       # in the game, i.e., more risk accepted by the reposter.
-      weighted_sum = (like_count * 0.25) + (repost_count * 6),
+      # Log transform the counts to better handle outliers.
+      weighted_sum = (log10(like_count + 1) * 0.25) + (log10(repost_count + 1) * 5),
       age_days = as.numeric(difftime(current_day, date, units = "days")),
       # Because we care most about *recent* activity, we reduce the weighted
       # sum using an exponential decay function based on post age, i.e.,
