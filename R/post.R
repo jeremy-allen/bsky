@@ -17,7 +17,7 @@ bs <- function(query = "rstats", n_posts = 2000, keep = FALSE) {
   )
 
   # score degree of sociality of all posts
-  posts_all <- rstats_posts_raw |> 
+  posts_scored <- rstats_posts_raw |> 
     select(uri, like_count, repost_count, author, record) |> 
     unnest_wider(c(author, record), names_sep = "_") |>
     distinct() |> 
@@ -31,13 +31,17 @@ bs <- function(query = "rstats", n_posts = 2000, keep = FALSE) {
     # calculate and column for sociality score
     calculate_post_scores()
 
-  all_date_span <- as.integer(difftime(max(posts_all$date, na.rm = TRUE), 
-    min(posts_all$date, na.rm = TRUE), units = "days") + 1)
+  all_date_span <- as.integer(difftime(max(posts_scored$date, na.rm = TRUE), 
+    min(posts_scored$date, na.rm = TRUE), units = "days") + 1)
   
   n_keep <- 100
 
+  if (n_posts < 100) {
+    n_keep <- n_posts
+  }
+
   # just the n most engaged
-  posts <- posts_all |> 
+  posts <- posts_scored |> 
     arrange(desc(score)) |> 
     mutate(order = row_number()) |> 
     slice(1:n_keep) |> 
@@ -69,7 +73,8 @@ bs <- function(query = "rstats", n_posts = 2000, keep = FALSE) {
 
   if (keep == TRUE) {
     list(
-      posts_all = posts_all,
+      posts_raw = rstats_posts_raw,
+      posts_scored = posts_scored,
       posts = posts,
       top_date_span = top_date_span,
       all_date_span = all_date_span
