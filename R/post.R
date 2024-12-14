@@ -7,7 +7,8 @@ source("R/score.R")
 # authenticate to bsky
 my_auth <- bs_auth(user = bs_get_user(), pass = bs_get_pass())
 
-bs <- function(query = "rstats", n_posts = 1000, keep = FALSE) {
+bs <- function(query = "rstats", n_posts = 1000,
+               keep = FALSE, auth = my_auth) {
 
   # search for posts
   rstats_posts_raw <- bs_search_posts(
