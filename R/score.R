@@ -11,19 +11,21 @@ calculate_post_scores <- function(df) {
   # more of their score. If the dates span 12 days, the constant will be 3.6.
   # A lower number will decay a score more quickly, letting more recent posts
   # retain more score while older posts' scores are quickly reduced to near 0.
-  decay_constant <- round(as.double(date_span * .3), 4)
+  decay_constant <- round(as.double(date_span * .3), 6)
 
   df |> 
     mutate(
-      # Value reposts more than likes because reposts have more skin
-      # in the game, i.e., more risk accepted by the reposter.
+      # Value replies the most because replies have more skin
+      # in the game, i.e., more risk accepted by the replier.
       # Log transform the counts to better handle outliers.
-      weighted_sum = (log10(like_count + 1) * 0.3) + (log10(repost_count + 1) * 5),
+      weighted_sum = (log10(like_count + 1)   * 0.10) +
+                     (log10(repost_count + 1) * 1.30) +
+                     (log10(reply_count + 1)  * 4.00),
       age_days = as.numeric(difftime(current_day, date, units = "days")),
       # Because we care most about *recent* activity, we reduce the weighted
       # sum using an exponential decay function based on post age, i.e.,
       # each day of age exponentially reduces a post's sociality score.
       age_factor = exp(-age_days / decay_constant),
-      score = round(weighted_sum * age_factor, 4)
+      score = round(weighted_sum * age_factor, 6)
     )
 } 
