@@ -5,7 +5,7 @@ source("R/build-url.R")
 source("R/score.R")
 
 # authenticate to bsky
-auth <- bs_auth(user = bs_get_user(), pass = bs_get_pass())
+my_auth <- bs_auth(user = bs_get_user(), pass = bs_get_pass())
 
 bs <- function(query = "rstats", n_posts = 1000, keep = FALSE) {
 
@@ -13,7 +13,8 @@ bs <- function(query = "rstats", n_posts = 1000, keep = FALSE) {
   rstats_posts_raw <- bs_search_posts(
     query = query,
     limit = n_posts,
-    sort = "latest"
+    sort = "latest",
+    auth = my_auth
   )
 
   # score degree of sociality of all posts
